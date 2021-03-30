@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shared", "_Shared", "{BB34176B-DD22-4F95-9A57-7BB8F522C84E}"
+	ProjectSection(SolutionItems) = preProject
+		_Shared\SharedAssemblyInfo.cs = _Shared\SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ui", "Ui", "{603D9610-8C97-456C-9EAF-23B970B0591A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{EF3B4C81-F1A2-4157-AF2B-C28DBB30BDF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{206C6753-E5C7-43D8-A83B-96F48C9809C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Core", "Logic\Logic.Core\Logic.Core.csproj", "{1DFCC717-8C37-42DB-A8D2-6993DA3EB094}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DFCC717-8C37-42DB-A8D2-6993DA3EB094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DFCC717-8C37-42DB-A8D2-6993DA3EB094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DFCC717-8C37-42DB-A8D2-6993DA3EB094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DFCC717-8C37-42DB-A8D2-6993DA3EB094}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1DFCC717-8C37-42DB-A8D2-6993DA3EB094} = {206C6753-E5C7-43D8-A83B-96F48C9809C1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {262D9A04-FD11-494A-B3F1-448959B30963}
+	EndGlobalSection
+EndGlobal
