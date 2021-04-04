@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="Block1Uebung1.Views.FlowerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:data="clr-namespace:Block1Uebung1.Models"
+             xmlns:viewModel="clr-namespace:Block1Uebung1.ViewModels"
+             xmlns:local="clr-namespace:Block1Uebung1.Views"
+             xmlns:vml="clr-namespace:Block1Uebung1.VML"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             vml:ViewModelLocator.AutoHookedUpViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="flowersTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=NameOfFlower, Mode=OneWay}" Margin="0 5 3 5"/>
+            </StackPanel>
+        </DataTemplate>
+        <!-- <DataTemplate x:Key="alphabetTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=, Mode=OneWay}" Margin="0 5 3 5"/>
+            </StackPanel>
+        </DataTemplate>-->
+    </UserControl.Resources>
+
+        <Grid>
+        <DockPanel LastChildFill="False">
+            <StackPanel DockPanel.Dock="Left" Margin="20 20 20 20">
+                <!-- TODO Text zur Liste hinzufügen -->
+                <TextBox  Text="{Binding Path=EnteredFlower, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                <Button Content="Hinzufügen" Command="{Binding AddCommand}" Width="80" Height="30" HorizontalAlignment="Left" Margin="0 10 0 0"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Left" Margin="20 20 20 20">
+                <ScrollViewer>
+                    <ListBox ItemsSource="{Binding Flowers, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource flowersTemplate}" SelectedItem="{Binding SelectedFlower}"
+                     Width="120" Height="300" HorizontalAlignment="Left"/>
+                </ScrollViewer>
+                <Button Content="Löschen" Command="{Binding DeleteCommand}" Width="100" Height="30" HorizontalAlignment="Left" Margin="0 10 0 0"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Left" Margin="0 20 20 20">
+                <ComboBox Name="MyCombobox" ItemsSource="{Binding MyAlphabet}" SelectedItem="{Binding SelectedLetter, UpdateSourceTrigger=PropertyChanged}" Width="50">
+                </ComboBox>
+
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+
+
+    <!-- <Grid>
+        
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left" Orientation="Vertical" HorizontalAlignment="Left" Margin="20">
+                <TextBox Text="Name der Blume" Width="150" HorizontalAlignment="Left" Margin="10" Padding="4"/>
+                <Button Content="Hinzufügen" Width="100" Height="30" HorizontalAlignment="Left" Margin="10"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20">
+                <ItemsControl ItemsSource="{Binding Path=Flowers}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path = NameOfFlower, Mode=OneWay}" Width="120" Margin="0 5 3 5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="Löschen" Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20"/>
+            </StackPanel>
+
+        </DockPanel>
+
+    </Grid> -->
+</UserControl>
