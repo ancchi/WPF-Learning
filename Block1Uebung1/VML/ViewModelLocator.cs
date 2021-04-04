@@ -5,7 +5,8 @@ using System.Windows;
 namespace Block1Uebung1.VML {
     class ViewModelLocator {
 
-        // der ViewModelLocator findet anhand des in XAML eingebundenden Views die passende ViewModel-Klasse und initialisert mit ihnen den gebrauchten DataContext
+        /* der ViewModelLocator findet anhand des in XAML eingebundenden Views die passende ViewModel-Klasse und 
+         * initialisert mit ihnen den gebrauchten DataContext */
 
         public static bool GetAutoHookedUpViewModel(DependencyObject obj) {
             return (bool)obj.GetValue(AutoHookedUpViewModelProperty);
