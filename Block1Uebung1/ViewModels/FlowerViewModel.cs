@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using Block1Uebung1.Models;
-using System;
 
 
 namespace Block1Uebung1.ViewModels {
