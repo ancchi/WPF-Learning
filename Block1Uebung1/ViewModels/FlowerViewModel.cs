@@ -1,9 +1,11 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Block1Uebung1.Models;
 
 
 namespace Block1Uebung1.ViewModels {
-    class FlowerViewModel {
+    class FlowerViewModel : INotifyPropertyChanged {
 
         ObservableCollection<Flower> flowers = new ObservableCollection<Flower>();
         ObservableCollection<Flower> unfilteredFlowerList = new ObservableCollection<Flower>();
@@ -13,15 +15,19 @@ namespace Block1Uebung1.ViewModels {
             LoadFlowers();
             // DeleteCommand ist eine Instanz von MyIcommand; ich kann sie mit dem Konstruktor initialisieren,
             // der eine Action und eine Func<bool> entgegennimmt
-            unfilteredFlowerList = flowers;
+           
             DeleteCommand = new MyICommand(OnDelete, CanDelete);
             AddCommand = new MyICommand(OnAdd, CanAdd);
-            FilterCommand = new MyICommand(OnFilter, CanFilter);
         }
 
         public ObservableCollection<Flower> Flowers {
-            get;
-            set;
+            get {
+                return flowers;
+            }
+            set {
+                flowers = value;
+                RaisePropertyChanged();
+            }
         }
 
         private void LoadFlowers() {
@@ -31,7 +37,15 @@ namespace Block1Uebung1.ViewModels {
             flowers.Add(new Flower { NameOfFlower = "Tulpe" });
             flowers.Add(new Flower { NameOfFlower = "Lilie" });
             flowers.Add(new Flower { NameOfFlower = "Lotus" });
+            flowers.Add(new Flower { NameOfFlower = "Amaryllis" });
+            flowers.Add(new Flower { NameOfFlower = "Euphorbia" });
+            flowers.Add(new Flower { NameOfFlower = "Fetthenne" });
+            flowers.Add(new Flower { NameOfFlower = "Gloriosa" });
+            flowers.Add(new Flower { NameOfFlower = "Inkalilie" });
+            flowers.Add(new Flower { NameOfFlower = "Zauberglöckchen" });
+            flowers.Add(new Flower { NameOfFlower = "Iris" });
 
+            unfilteredFlowerList = flowers;
             Flowers = flowers;
         }
 
@@ -41,6 +55,7 @@ namespace Block1Uebung1.ViewModels {
         }
 
         // Element löschen
+
         private void OnDelete() {
             Flowers.Remove(SelectedFlower);
         }
@@ -58,17 +73,29 @@ namespace Block1Uebung1.ViewModels {
             set {
                 _selectedFlower = value;
                 DeleteCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged();
             }
         }
-
+         
         // Element hinzufügen
+
         public MyICommand AddCommand {
             get;
             set;
         }
 
         private void OnAdd() {
-            Flowers.Add(new Flower { NameOfFlower = _enteredFlower });
+            bool exists = false;
+            foreach (Flower flower in Flowers) {
+                if(flower.NameOfFlower.Equals(_enteredFlower)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                Flowers.Add(new Flower { NameOfFlower = _enteredFlower });
+                EnteredFlower = string.Empty;
+            }
         }
 
         private bool CanAdd() {
@@ -84,15 +111,13 @@ namespace Block1Uebung1.ViewModels {
             set {
                 _enteredFlower = value;
                 AddCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged();
             }
         }
 
-        // Liste filtern
+        // Liste nach Anfangsbuchstaben filtern
 
-        // TODO 
-        // Problem: die Liste in der ListBox wird nicht geupdatet; man kann mit der Combobox anscheinend keinen Command o.ä. ausführen
-
-        private string[] _myAlphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
+        private string[] _myAlphabet = {"Alle", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
                                         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
         public string[] MyAlphabet {
@@ -101,24 +126,7 @@ namespace Block1Uebung1.ViewModels {
             }
         }
 
-        public MyICommand FilterCommand {
-            get;
-            set;
-        }
-
-        string _selectedLetter;
-
-        private void OnFilter() {
-            if (_selectedLetter != null) {
-                ShowFlowersWithLetter(_selectedLetter);
-            }
-        }
-
-        private bool CanFilter() {
-            return !(string.IsNullOrEmpty(_selectedLetter));
-        }
-
-       
+        string _selectedLetter;  
 
         public string SelectedLetter {
             get {
@@ -127,22 +135,34 @@ namespace Block1Uebung1.ViewModels {
             set {
                 if(_selectedLetter != value) {
                     _selectedLetter = value;
-                    FilterCommand.RaiseCanExecuteChanged();
+                    ShowFlowersWithLetter(_selectedLetter);
                 }
             }     
         }
 
-        ObservableCollection<Flower> filteredFlowers = new ObservableCollection<Flower>();
 
-        private void ShowFlowersWithLetter(string letter) {
+        private void ShowFlowersWithLetter(string selectedLetter) {
+
+            ObservableCollection<Flower> filteredFlowers = new ObservableCollection<Flower>();
             Flowers = unfilteredFlowerList;
 
-            foreach (Flower flower in Flowers) {
-                if(flower.NameOfFlower.StartsWith(letter)) {
-                    filteredFlowers.Add(flower);
+            if (!selectedLetter.Equals("Alle")) {
+                foreach (Flower flower in Flowers) {
+                    if (flower.NameOfFlower.StartsWith(selectedLetter)) {
+                        filteredFlowers.Add(flower);
+                    }
                 }
+                Flowers = filteredFlowers;
+            } else {
+                Flowers = unfilteredFlowerList;
             }
-            Flowers = filteredFlowers;
+            RaisePropertyChanged(nameof(Flowers));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged([CallerMemberName] string propertyName = "") {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

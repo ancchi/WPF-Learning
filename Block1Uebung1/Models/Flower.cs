@@ -11,10 +11,8 @@ using System.Runtime.CompilerServices;
  */
 
 namespace Block1Uebung1.Models {
-    public class FlowerModel {
-    }
 
-    class Flower: INotifyPropertyChanged {
+    class Flower {
         private string nameOfFlower = string.Empty;
 
         public string NameOfFlower {
@@ -24,17 +22,8 @@ namespace Block1Uebung1.Models {
             set {
                 if (value != this.nameOfFlower) {
                     this.nameOfFlower = value;
-                    RaisePropertyChanged();
                 }
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged([CallerMemberName] string propertyName = "") {
-            if (PropertyChanged != null) {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
     } 
 }
