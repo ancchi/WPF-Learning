@@ -1,11 +1,31 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Block1Uebung2.Models;
 
 namespace Block1Uebung2.ViewModels {
-    class TeamMemberViewModel {
+    class TeamMemberViewModel : INotifyPropertyChanged {
 
         public ObservableCollection<TeamMember> team1 = new ObservableCollection<TeamMember>();
         public ObservableCollection<TeamMember> team2 = new ObservableCollection<TeamMember>();
+
+        private TeamMember selectedTeamMember1Dummy;
+
+        public TeamMember SelectedTeamMember1Dummy
+        {
+            get => selectedTeamMember1Dummy;
+            set
+            {
+                if (selectedTeamMember1Dummy != value)
+                {
+                    selectedTeamMember1Dummy = value;
+                    RaisePropertyChanged();
+                   
+                }
+            }
+        }
+        
+
 
         public TeamMemberViewModel() {
             FillTeam1();
@@ -57,6 +77,7 @@ namespace Block1Uebung2.ViewModels {
             }
             set {
                 _selectedTeamMember1 = value;
+                RaisePropertyChanged();
                 ChangeTeam1Command.RaiseCanExecuteChanged();
             }
             
@@ -78,6 +99,14 @@ namespace Block1Uebung2.ViewModels {
         }
 
         private TeamMember _selectedTeamMember2;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public TeamMember SelectedTeamMember2 {
             get {
                 return _selectedTeamMember2;
