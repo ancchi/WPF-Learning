@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Block1Uebung3.Views"
              xmlns:Converters="clr-namespace:Block1Uebung3.Converters"
              xmlns:vml="clr-namespace:Block1Uebung3.VML"
              vml:ViewModelLocator.AutoHookedUpViewModel="True"
@@ -25,10 +24,11 @@
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
                 <ScrollViewer>
                     <DataGrid Name="Studentenliste" ItemsSource="{Binding Students}" ItemTemplate="{Binding studentListTemplate}" SelectedItem="{Binding Student, UpdateSourceTrigger=PropertyChanged}" 
-                      Height="180" Width="180" Margin="0 20 0 0" Grid.ColumnSpan="2"/>
+                      Height="159" Width="184" Margin="0 20 0 0" Grid.ColumnSpan="2" CanUserAddRows="False"/>
                 </ScrollViewer>
             </StackPanel>
             <!-- Problem: Anklicken der Checkbox im Datagrid verändert die Farbe nicht nachträglich, weil das Datagrid erst nach einem "Enter" oder Zeilenwechsel aktualisiert -->
+            <!-- TODO leere Zeile muss weg! -->
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 20 0 0">
                 <TextBox Text="{Binding Path=Student.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                          Foreground="{Binding Student.IstAnwesend, Converter={StaticResource BooleanToColorConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

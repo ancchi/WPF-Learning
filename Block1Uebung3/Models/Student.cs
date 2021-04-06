@@ -7,10 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Block1Uebung3.Models {
-    class StudentModel {}
-        
 
-    public class Student : INotifyPropertyChanged {
+    public class Student {
         private string _name = string.Empty;
         private bool _istAnwesend = false;
 
@@ -21,7 +19,6 @@ namespace Block1Uebung3.Models {
             set {
                 if (!string.Equals(_name, value)) {
                     _name = value;
-                    RaisePropertyChanged();
                 }
             }
         }
@@ -32,18 +29,7 @@ namespace Block1Uebung3.Models {
             }
             set {
                 _istAnwesend = value;
-                RaisePropertyChanged();
             }
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = "") {
-            if (PropertyChanged != null) {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
     } 
 }

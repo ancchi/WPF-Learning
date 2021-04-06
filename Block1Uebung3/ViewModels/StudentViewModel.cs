@@ -23,10 +23,9 @@ namespace Block1Uebung3.ViewModels {
             get => student;
             set {
                 student = value;
-                RaisePropertyChanged();
+               RaisePropertyChanged();
             }
         }
-        public object SetProperty { get; private set; }
 
         private void fillStudentList() {
              students.Add(new Student { Name = "Lisa", IstAnwesend = true });
@@ -37,7 +36,7 @@ namespace Block1Uebung3.ViewModels {
              students.Add(new Student { Name = "Homer", IstAnwesend = false });
              students.Add(new Student { Name = "Marge", IstAnwesend = true });
 
-             Students = students;
+            Students = students;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
