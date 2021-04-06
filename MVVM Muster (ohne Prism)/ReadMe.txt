@@ -1,0 +1,1 @@
+﻿Das ViewModel wird hier direkt zugeordnet, also ohne Locator, so dass Du besser sehen kannst, wie die Zuordnung erfolgt.
