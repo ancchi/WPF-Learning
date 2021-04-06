@@ -9,24 +9,6 @@ namespace Block1Uebung2.ViewModels {
         public ObservableCollection<TeamMember> team1 = new ObservableCollection<TeamMember>();
         public ObservableCollection<TeamMember> team2 = new ObservableCollection<TeamMember>();
 
-        private TeamMember selectedTeamMember1Dummy;
-
-        public TeamMember SelectedTeamMember1Dummy
-        {
-            get => selectedTeamMember1Dummy;
-            set
-            {
-                if (selectedTeamMember1Dummy != value)
-                {
-                    selectedTeamMember1Dummy = value;
-                    RaisePropertyChanged();
-                   
-                }
-            }
-        }
-        
-
-
         public TeamMemberViewModel() {
             FillTeam1();
             InitializeTeam2();
@@ -77,8 +59,8 @@ namespace Block1Uebung2.ViewModels {
             }
             set {
                 _selectedTeamMember1 = value;
-                RaisePropertyChanged();
                 ChangeTeam1Command.RaiseCanExecuteChanged();
+                RaisePropertyChanged();
             }
             
         }
@@ -114,6 +96,7 @@ namespace Block1Uebung2.ViewModels {
             set {
                 _selectedTeamMember2 = value;
                 ChangeTeam2Command.RaiseCanExecuteChanged();
+                RaisePropertyChanged();
             }
         }
 

@@ -11,10 +11,8 @@ using System.Runtime.CompilerServices;
 
 
 namespace Block1Uebung2.Models {
-    public class TeamMemberModel {
-    }
-
-    class TeamMember: INotifyPropertyChanged {
+ 
+    class TeamMember {
         private string memberName;
 
         public string MemberName {
@@ -24,19 +22,8 @@ namespace Block1Uebung2.Models {
             set {
                 if (memberName != value) {
                     memberName = value;
-                    RaisePropertyChanged();
                 }
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = "") {
-            if (PropertyChanged != null) {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-
     }
 }
