@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Block1Uebung3.Views.StudentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Block1Uebung3.Views"
+             xmlns:Converters="clr-namespace:Block1Uebung3.Converters"
+             xmlns:vml="clr-namespace:Block1Uebung3.VML"
+             vml:ViewModelLocator.AutoHookedUpViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="450">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="studentListTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Margin="0 5 3 5" />
+                <CheckBox  Checked="{Binding Path=IstAnwesend, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 3 5"/>
+            </StackPanel>
+        </DataTemplate>
+        <Converters:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <DockPanel LastChildFill="False">
+            <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+                <ScrollViewer>
+                    <DataGrid Name="Studentenliste" ItemsSource="{Binding Students}" ItemTemplate="{Binding studentListTemplate}" SelectedItem="{Binding Student, UpdateSourceTrigger=PropertyChanged}" 
+                      Height="180" Width="180" Margin="0 20 0 0" Grid.ColumnSpan="2"/>
+                </ScrollViewer>
+            </StackPanel>
+            <!-- Problem: Anklicken der Checkbox im Datagrid verändert die Farbe nicht nachträglich, weil das Datagrid erst nach einem "Enter" oder Zeilenwechsel aktualisiert -->
+            <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 20 0 0">
+                <TextBox Text="{Binding Path=Student.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Foreground="{Binding Student.IstAnwesend, Converter={StaticResource BooleanToColorConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         FontWeight="Bold" FontSize="20"
+                         BorderThickness="0" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>
