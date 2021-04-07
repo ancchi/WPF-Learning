@@ -10,12 +10,7 @@
              d:DesignHeight="600" d:DesignWidth="450">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="studentListTemplate">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Margin="0 5 3 5" />
-                <CheckBox  Checked="{Binding Path=IstAnwesend, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 3 5"/>
-            </StackPanel>
-        </DataTemplate>
+        
         <Converters:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
     </UserControl.Resources>
 
@@ -23,15 +18,25 @@
         <DockPanel LastChildFill="False">
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
                 <ScrollViewer>
-                    <DataGrid Name="Studentenliste" ItemsSource="{Binding Students}" ItemTemplate="{Binding studentListTemplate}" SelectedItem="{Binding Student, UpdateSourceTrigger=PropertyChanged}" 
-                      Height="159" Width="184" Margin="0 20 0 0" Grid.ColumnSpan="2" CanUserAddRows="False"/>
+                    <ListBox Name="Studentenliste" ItemsSource="{Binding Students}" SelectedItem="{Binding Student, UpdateSourceTrigger=PropertyChanged}" 
+                      Height="159" Width="184" Margin="0 20 0 0" Grid.ColumnSpan="2">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="Student">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Margin="0 5 3 5" />
+                                    <CheckBox  IsChecked="{Binding Path=IstAnwesend, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 3, 5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
                 </ScrollViewer>
             </StackPanel>
             <!-- Problem: Anklicken der Checkbox im Datagrid verändert die Farbe nicht nachträglich, weil das Datagrid erst nach einem "Enter" oder Zeilenwechsel aktualisiert -->
             <!-- TODO leere Zeile muss weg! -->
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 20 0 0">
                 <TextBox Text="{Binding Path=Student.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                         Foreground="{Binding Student.IstAnwesend, Converter={StaticResource BooleanToColorConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         Foreground="{Binding Student.IstAnwesend, Converter={StaticResource BooleanToColorConverter}}" 
                          FontWeight="Bold" FontSize="20"
                          BorderThickness="0" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
             </StackPanel>
