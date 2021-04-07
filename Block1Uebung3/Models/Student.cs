@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Block1Uebung3.Models {
 
-    public class Student {
+    public class Student : INotifyPropertyChanged {
         private string _name = string.Empty;
         private bool _istAnwesend = false;
 
@@ -19,6 +15,7 @@ namespace Block1Uebung3.Models {
             set {
                 if (!string.Equals(_name, value)) {
                     _name = value;
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -29,7 +26,14 @@ namespace Block1Uebung3.Models {
             }
             set {
                 _istAnwesend = value;
+                RaisePropertyChanged();
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     } 
 }

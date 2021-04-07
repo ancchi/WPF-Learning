@@ -23,6 +23,7 @@ namespace Block1Uebung3.ViewModels {
             get => student;
             set {
                 student = value;
+
                RaisePropertyChanged();
             }
         }
