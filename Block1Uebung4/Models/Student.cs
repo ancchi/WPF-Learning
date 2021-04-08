@@ -4,7 +4,7 @@ using Block1Uebung4.Converters;
 
 namespace Block1Uebung4.Models {
     
-    //[TypeConverter(typeof(BooleanToColorTypeConverter))]
+    [TypeConverter(typeof(StudentTypeConverter))]
     public class Student : INotifyPropertyChanged {
         private string _name = string.Empty;
         private bool _istAnwesend = false;

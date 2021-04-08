@@ -11,6 +11,13 @@ namespace Block1Uebung4.ViewModels {
 
         public StudentViewModel() {
             fillStudentList();
+
+            // Wir hören hier selbst auf das Ereignis, wenn sich der Wert einer Eigenschaft ändert
+            // Das ist zwar so nicht notwendig, wir können so den Code aber besser strukturieren
+
+            this.PropertyChanged += OnPropertyChanged;
+
+
         }
 
         public ObservableCollection<Student> students = new ObservableCollection<Student>();
@@ -26,6 +33,59 @@ namespace Block1Uebung4.ViewModels {
             set {
                 student = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        private string studentName;
+
+        public string StudentName
+        {
+            get => studentName;
+            set
+            {
+                // Die Änderung soll nur ausgelöst werden, wenn sich der Wert tatsächlich geändert hat.
+                if (!string.Equals(studentName, value))
+                {
+                    studentName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Wird aufgerufen, wenn sich hier eine Eigenschaft geändert hat
+        /// </summary>
+        /// <param name="args"></param>
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            // Uns interessiert nur die Änderung des Wertes für StudentName
+            if (string.Equals(args.PropertyName, nameof(StudentName)))
+            {
+
+                var typeConverter = TypeDescriptor.GetConverter(typeof(Student));
+
+                if (typeConverter == null)
+                {
+                    return;
+                }
+
+                // Überprüfen, ob die Zeichenkette umgewandelt werden kann
+                if (typeConverter.CanConvertFrom(typeof(string)))
+                {
+                    // umwandeln
+                    var newStudent = typeConverter.ConvertFrom(StudentName) as Student;
+
+                    // wenn ein Ergebnis vorliegt
+                    if (newStudent != null)
+                    {
+                        // der Liste hinzufügen
+                        students.Add(newStudent);
+
+                        // und markieren
+                        Student = newStudent; 
+                    }
+                }
+
             }
         }
 
