@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Block1Uebung4.Views.StudentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mdls="clr-namespace:Block1Uebung4.Models"
+             xmlns:local="clr-namespace:Block1Uebung4.Views"
+             xmlns:Converter="clr-namespace:Block1Uebung4.Converters"
+             xmlns:vml="clr-namespace:Block1Uebung4.VML"
+             vml:ViewModelLocator.AutoHookedUpViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Converter:BooleanToColorTypeConverter x:Key="BooleanToColorTypeConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <DockPanel LastChildFill="False">
+            <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+                <ScrollViewer>
+                    <ListBox Name="Studentenliste" ItemsSource="{Binding Students}" SelectedItem="{Binding Student, UpdateSourceTrigger=PropertyChanged}" 
+                      Height="159" Width="184" Margin="0 20 0 0" Grid.ColumnSpan="2">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="Student">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Margin="0 5 3 5" />
+                                    <CheckBox  IsChecked="{Binding Path=IstAnwesend, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 3, 5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </ScrollViewer>
+            </StackPanel>
+            <!-- Problem: Anklicken der Checkbox im Datagrid verändert die Farbe nicht nachträglich, weil das Datagrid erst nach einem "Enter" oder Zeilenwechsel aktualisiert -->
+            <!-- TODO leere Zeile muss weg! -->
+            <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 20 0 0">
+                <TextBlock Text="{Binding Path=Student.Name}" Width="120" Height="30" Foreground="{Binding Path=Student}"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 20 20 20">
+                <!-- Binden des Textblocks an den Button mit x:Name und Binding ElementName, um die Breite (ActualWidth) des Buttons zu referenzieren und auszugeben -->
+                <Button x:Name="btn" Content=":-)"/>
+                <TextBlock Text="{Binding ElementName=btn, Path=ActualWidth}"/>
+
+
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>
