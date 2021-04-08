@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 
 namespace Block1Uebung4.ViewModels {
 
-    [TypeConverter(typeof(BooleanToColorTypeConverter))]
     class StudentViewModel : INotifyPropertyChanged {
 
         public StudentViewModel() {
