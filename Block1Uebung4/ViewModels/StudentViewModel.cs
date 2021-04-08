@@ -1,13 +1,15 @@
-﻿using Block1Uebung4.Converters;
-using Block1Uebung4.Models;
+﻿using Block1Uebung4.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 
 namespace Block1Uebung4.ViewModels {
 
     class StudentViewModel : INotifyPropertyChanged {
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public StudentViewModel() {
             fillStudentList();
@@ -17,6 +19,7 @@ namespace Block1Uebung4.ViewModels {
 
             this.PropertyChanged += OnPropertyChanged;
 
+            this.PropertyChanged = PropertyChanged + OnPropertyChanged;
 
         }
 
@@ -36,59 +39,87 @@ namespace Block1Uebung4.ViewModels {
             }
         }
 
-        private string studentName;
+       
+        private string student_anwesend;
 
-        public string StudentName
-        {
-            get => studentName;
-            set
-            {
+        public string Student_Anwesend {
+            get => student_anwesend;
+            set {
                 // Die Änderung soll nur ausgelöst werden, wenn sich der Wert tatsächlich geändert hat.
-                if (!string.Equals(studentName, value))
-                {
-                    studentName = value;
+                if (!string.Equals(student_anwesend, value)) {
+                    student_anwesend = value;
                     RaisePropertyChanged();
                 }
             }
+        }
+
+        private Student studentEntry;
+        public Student StudentEntry {
+            get => studentEntry;
+            set {
+                studentEntry = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private SolidColorBrush colorBrush;
+
+        public SolidColorBrush ColorBrush {
+            get => colorBrush;
+            set {
+                colorBrush = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); // von hier weiter in "OnPropertyChanged(...)"
         }
 
         /// <summary>
         /// Wird aufgerufen, wenn sich hier eine Eigenschaft geändert hat
         /// </summary>
         /// <param name="args"></param>
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args) {
             // Uns interessiert nur die Änderung des Wertes für StudentName
-            if (string.Equals(args.PropertyName, nameof(StudentName)))
-            {
+            if (string.Equals(args.PropertyName, nameof(Student_Anwesend))) {
 
                 var typeConverter = TypeDescriptor.GetConverter(typeof(Student));
 
-                if (typeConverter == null)
-                {
+                if (typeConverter == null) {
                     return;
                 }
 
                 // Überprüfen, ob die Zeichenkette umgewandelt werden kann
-                if (typeConverter.CanConvertFrom(typeof(string)))
-                {
+                if (typeConverter.CanConvertFrom(typeof(string))) {
                     // umwandeln
-                    var newStudent = typeConverter.ConvertFrom(StudentName) as Student;
+                    Student newStudent = typeConverter.ConvertFrom(Student_Anwesend) as Student;
 
                     // wenn ein Ergebnis vorliegt
-                    if (newStudent != null)
-                    {
+                    if (newStudent != null) {
                         // der Liste hinzufügen
                         students.Add(newStudent);
 
                         // und markieren
-                        Student = newStudent; 
+                        Student = newStudent;
                     }
+                }
+            }
+            if (string.Equals(args.PropertyName, nameof(StudentEntry))) {
+
+                var typeConverter = TypeDescriptor.GetConverter(typeof(Student));
+
+                if (typeConverter == null) {
+                    return;
+                }
+
+                if (typeConverter.CanConvertFrom(typeof(string))) {
+
+                    ColorBrush = (SolidColorBrush)typeConverter.ConvertFrom(StudentEntry.ToString());
                 }
 
             }
         }
-
 
         private void fillStudentList() {
             students.Add(new Student { Name = "Lisa", IstAnwesend = true });
@@ -100,12 +131,6 @@ namespace Block1Uebung4.ViewModels {
             students.Add(new Student { Name = "Marge", IstAnwesend = true });
 
             Students = students;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

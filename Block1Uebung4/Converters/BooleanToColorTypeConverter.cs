@@ -10,9 +10,10 @@ using System.Windows.Media;
 
 namespace Block1Uebung4.Converters {
     
+    /// <summary>
+    /// Dieser TypeConverter kann aus einem Studenten-Objekt ermitteln, ob er anwesend ist und die Farbe dementsprechend anpassen
+    /// </summary>
     class BooleanToColorTypeConverter : TypeConverter {
-
-
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
 
             

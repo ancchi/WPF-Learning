@@ -3,44 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:mdls="clr-namespace:Block1Uebung4.Models"
-             xmlns:local="clr-namespace:Block1Uebung4.Views"
-             xmlns:Converter="clr-namespace:Block1Uebung4.Converters"
              xmlns:vml="clr-namespace:Block1Uebung4.VML"
              vml:ViewModelLocator.AutoHookedUpViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <Converter:BooleanToColorTypeConverter x:Key="BooleanToColorTypeConverter"/>
-    </UserControl.Resources>
-
     <Grid>
-        <Grid.RowDefinitions>
+        <!-- TODO <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
-        </Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions> -->
 
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="10">
-            <ListBox Name="Studentenliste" ItemsSource="{Binding Students}" SelectedItem="{Binding Student, UpdateSourceTrigger=PropertyChanged}" 
-                     Margin="5">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="Student">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Margin="0 5 3 5" />
-                            <CheckBox  IsChecked="{Binding Path=IstAnwesend, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 3, 5"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-
-            <!-- Binden des Textblocks an den Button mit x:Name und Binding ElementName, um die Breite (ActualWidth) des Buttons zu referenzieren und auszugeben -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button x:Name="btn" Content=":-)" Width="50" Height="26"/>
-            <Label Content="Hier den Wert für einen neuen Studenten eingeben:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding StudentName, UpdateSourceTrigger=LostFocus}" Width="200" Height="26" />
-        </StackPanel>
-
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="20">
+                <ScrollViewer>
+                    <ListBox Name="Studentenliste" ItemsSource="{Binding Students}" SelectedItem="{Binding StudentEntry, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="5" MaxHeight="250">
+                    <ListBox.ItemTemplate>
+                            <DataTemplate DataType="Student">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Margin="0 5 3 5" />
+                                    <CheckBox  IsChecked="{Binding Path=IstAnwesend, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 5, 3, 5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Left" Orientation="Vertical" Margin="20">
+                <Label Content="Hier den Wert für einen neuen Studenten eingeben:" HorizontalAlignment="Center" Margin="0 5 3 0"/>
+                <TextBox Text="{Binding Student_Anwesend, UpdateSourceTrigger=LostFocus}" Width="200" Height="26" Margin="0 10 0 10"/>
+                <Button Content="Hinzufügen" Width="80" Height="26" Margin="0, 10, 0, 10"/>
+                <TextBlock Text="{Binding Path=StudentEntry.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="120" Background="{Binding ColorBrush}"/>
+            </StackPanel>
+                
+            
+                
+           
+        </DockPanel>
     </Grid>
 </UserControl>
