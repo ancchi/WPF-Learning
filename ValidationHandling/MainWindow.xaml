@@ -1,0 +1,97 @@
+﻿<Window x:Class="ValidationHandling.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ValidationHandling"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <!--<Window.DataContext>
+        <local: />
+    </Window.DataContext>-->
+    <Window.Resources>
+        <Style x:Key="txtErrorStyle" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="Background" Value="DarkRed" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />
+                <RowDefinition Height="120" />
+                <RowDefinition Height="120" />
+                <RowDefinition Height="120" />
+                <RowDefinition Height="120" />
+            </Grid.RowDefinitions>
+
+            <!-- Gültigkeit über ValidationRule -->
+            <StackPanel Grid.Row="0">
+                <StackPanel.DataContext>
+                    <local:MainWindowViewModelWithErrorInfo />
+                </StackPanel.DataContext>
+                <Label Margin="10" Content="1. Die Überprüfung erfolgt über eine ValidationRule" FontWeight="Bold"/>
+                <TextBox Height="26" Margin="10,10,10,0" Style="{StaticResource txtErrorStyle}">
+                    <TextBox.Text>
+                        <Binding Path="FirstName" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:ShouldNotBeEmptyValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+            <!-- Problematisch hier ist, dass die Gültigkeit der Daten und deren Überprüfung in der UI definiert werden und damit von den eigentlichen Daten getrennt sind -->
+
+            <!-- Gültigkeit über IDataErrorInfo -->
+            <StackPanel Grid.Row="1">
+                <StackPanel.DataContext>
+                    <local:MainWindowViewModelWithErrorInfo />
+                </StackPanel.DataContext>
+                <Label Margin="10" Content="2. Die Überprüfung erfolgt über IDataErrorInfo (LastName)" FontWeight="Bold"/>
+                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Name="txtValidationByInterface"
+                         Style="{StaticResource txtErrorStyle}"/>
+                <Button Width="30" Height="26" HorizontalAlignment="Left" Margin="10,10,0,0" Content="Info" Click="Button_Click" />
+            </StackPanel>
+
+            <!-- Gültigkeit über DataErrorValidationRule -->
+            <StackPanel Grid.Row="2">
+                <StackPanel.DataContext>
+                    <local:MainWindowViewModelWithErrorInfo />
+                </StackPanel.DataContext>
+                <Label Margin="10" Content="3. Die Überprüfung erfolgt über die spezialisierte ValidationRule: DataErrorValidationRule (City)" FontWeight="Bold"/>
+                <TextBox Height="26" Margin="10,0,10,0" Style="{StaticResource txtErrorStyle}">
+                    <TextBox.Text>
+                        <Binding Path="City" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+
+            <!-- Gültigkeit in einem untergeordneten Objekt -->
+            <StackPanel Grid.Row="3">
+                <StackPanel.DataContext>
+                    <local:MainWindowViewModelWithErrorInfo />
+                </StackPanel.DataContext>
+                <Label Margin="10" Content="4. Die Überprüfung erfolgt über IDataErrorInfo (Street.Name)" FontWeight="Bold"/>
+                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding Street.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Style="{StaticResource txtErrorStyle}"/>
+            </StackPanel>
+
+            <!-- Gültigkeit über ein INotifyDataErrorInfo -->
+            <StackPanel Grid.Row="4">
+                <StackPanel.DataContext>
+                    <local:MainWindowViewModelWithErrorNotification />
+                </StackPanel.DataContext>
+                <Label Margin="10" Content="5. Die Überprüfung erfolgt über INotifyDataErrorInfo (LastName)" FontWeight="Bold"/>
+                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged,  Mode=TwoWay}" Style="{StaticResource txtErrorStyle}"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>
