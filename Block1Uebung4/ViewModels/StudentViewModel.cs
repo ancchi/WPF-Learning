@@ -1,5 +1,4 @@
-﻿using Block1Uebung4.Converters;
-using Block1Uebung4.Models;
+﻿using Block1Uebung4.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -39,14 +38,14 @@ namespace Block1Uebung4.ViewModels {
         }
 
        
-        private string student_anwesend;
+        private string studentInput;
         
-        public string Student_Anwesend {
-            get => student_anwesend;
+        public string StudentInput {
+            get => studentInput;
             set {
                 // Die Änderung soll nur ausgelöst werden, wenn sich der Wert tatsächlich geändert hat.
-                if (!string.Equals(student_anwesend, value)) {
-                    student_anwesend = value;
+                if (!string.Equals(studentInput, value)) {
+                    studentInput = value;
                     RaisePropertyChanged();
                 }
             }
@@ -83,7 +82,7 @@ namespace Block1Uebung4.ViewModels {
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args) {
             // StudentTypeConverter
             // Uns interessiert nur die Änderung des Wertes für StudentName
-            /*if (string.Equals(args.PropertyName, nameof(Student_Anwesend))) {
+            if (string.Equals(args.PropertyName, nameof(StudentInput))) {
 
                 var typeConverter = TypeDescriptor.GetConverter(typeof(Student));
 
@@ -94,7 +93,7 @@ namespace Block1Uebung4.ViewModels {
                 // Überprüfen, ob die Zeichenkette umgewandelt werden kann
                 if (typeConverter.CanConvertFrom(typeof(string))) {
                     // umwandeln
-                    Student newStudent = typeConverter.ConvertFrom(Student_Anwesend) as Student;
+                    Student newStudent = typeConverter.ConvertFrom(StudentInput) as Student;
 
                     // wenn ein Ergebnis vorliegt
                     if (newStudent != null) {
@@ -105,10 +104,10 @@ namespace Block1Uebung4.ViewModels {
                         Student = newStudent;
                     }
                 }
-            }*/
+            }
 
             // StudentToColorTypeConverter
-            if (string.Equals(args.PropertyName, nameof(StudentEntry))) {
+            /*if (string.Equals(args.PropertyName, nameof(StudentEntry))) {
 
                 var typeConverter = TypeDescriptor.GetConverter(typeof(Student));
 
@@ -126,7 +125,7 @@ namespace Block1Uebung4.ViewModels {
                         ColorBrush = color;
                     }
                 }
-            }
+            }*/
         }
 
         private void fillStudentList() {

@@ -21,14 +21,12 @@ namespace Block1Uebung4.Converters
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string) { // base.ConvertFrom kann keinen String verarbeiten
-                string valueAsString = value as string;
+            if (value is string) {
+                
+                string[] studentArray = value.ToString().Split(", ");
 
-                // TODO: mache aus der Zeichenkette einen Studenten
-                string[] studentArray = valueAsString.Split(", ");
-                bool transformed;
-
-                if (studentArray.Length == 2 && bool.TryParse(studentArray[1].ToString(), out transformed)) {
+                if (studentArray.Length == 2) {
+                    // dass der erste Eintrag ein Name und der zweite Eintrag ein Boolean ist, wird durch einen Validator sichergestellt
                     return new Student { Name = studentArray[0], IstAnwesend = Convert.ToBoolean(studentArray[1]) };
                 } else {
                     return new Student { Name = studentArray[0], IstAnwesend = false };

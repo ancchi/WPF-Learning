@@ -21,5 +21,10 @@ namespace Block1Uebung4.Views {
         public StudentView() {
             InitializeComponent();
         }
+
+        private void addNewStudentButton_Click(object sender, RoutedEventArgs e) {
+            BindingExpression binding = newStudent.GetBindingExpression(TextBox.TextProperty);
+            binding.UpdateSource();
+        }
     }
 }
