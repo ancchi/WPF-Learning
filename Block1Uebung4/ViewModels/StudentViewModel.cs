@@ -1,4 +1,5 @@
-﻿using Block1Uebung4.Models;
+﻿using Block1Uebung4.Converters;
+using Block1Uebung4.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -18,9 +19,6 @@ namespace Block1Uebung4.ViewModels {
             // Das ist zwar so nicht notwendig, wir können so den Code aber besser strukturieren
 
             this.PropertyChanged += OnPropertyChanged;
-
-            this.PropertyChanged = PropertyChanged + OnPropertyChanged;
-
         }
 
         public ObservableCollection<Student> students = new ObservableCollection<Student>();
@@ -31,6 +29,7 @@ namespace Block1Uebung4.ViewModels {
         }
 
         private Student student;
+        
         public Student Student {
             get => student;
             set {
@@ -41,7 +40,7 @@ namespace Block1Uebung4.ViewModels {
 
        
         private string student_anwesend;
-
+        
         public string Student_Anwesend {
             get => student_anwesend;
             set {
@@ -54,6 +53,7 @@ namespace Block1Uebung4.ViewModels {
         }
 
         private Student studentEntry;
+
         public Student StudentEntry {
             get => studentEntry;
             set {
@@ -81,8 +81,9 @@ namespace Block1Uebung4.ViewModels {
         /// </summary>
         /// <param name="args"></param>
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args) {
+            // StudentTypeConverter
             // Uns interessiert nur die Änderung des Wertes für StudentName
-            if (string.Equals(args.PropertyName, nameof(Student_Anwesend))) {
+            /*if (string.Equals(args.PropertyName, nameof(Student_Anwesend))) {
 
                 var typeConverter = TypeDescriptor.GetConverter(typeof(Student));
 
@@ -104,7 +105,9 @@ namespace Block1Uebung4.ViewModels {
                         Student = newStudent;
                     }
                 }
-            }
+            }*/
+
+            // StudentToColorTypeConverter
             if (string.Equals(args.PropertyName, nameof(StudentEntry))) {
 
                 var typeConverter = TypeDescriptor.GetConverter(typeof(Student));
@@ -115,9 +118,14 @@ namespace Block1Uebung4.ViewModels {
 
                 if (typeConverter.CanConvertFrom(typeof(string))) {
 
-                    ColorBrush = (SolidColorBrush)typeConverter.ConvertFrom(StudentEntry.ToString());
-                }
+                    string studentString = StudentEntry.ToString();
 
+                    SolidColorBrush color = (SolidColorBrush)typeConverter.ConvertFrom(studentString);
+
+                    if (color != null) {
+                        ColorBrush = color;
+                    }
+                }
             }
         }
 

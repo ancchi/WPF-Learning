@@ -3,20 +3,21 @@ using System.Runtime.CompilerServices;
 using Block1Uebung4.Converters;
 
 namespace Block1Uebung4.Models {
-    
-    //[TypeConverter(typeof(StudentTypeConverter))]
-    [TypeConverter(typeof(BooleanToColorTypeConverter))]
-    public class Student : INotifyPropertyChanged {
-        private string _name = string.Empty;
-        private bool _istAnwesend = false;
 
-        public string Name {
+
+    //[TypeConverter(typeof(StudentTypeConverter))]
+    [TypeConverter(typeof(StudentToColorTypeConverter))]
+    public class Student : INotifyPropertyChanged {
+        private string name = string.Empty;
+        private bool istAnwesend = false;
+
+       public string Name {
             get {
-                return _name;
+                return name;
             }
             set {
-                if (!string.Equals(_name, value)) {
-                    _name = value;
+                if (!string.Equals(name, value)) {
+                    name = value;
                     RaisePropertyChanged();
                 }
             }
@@ -24,10 +25,10 @@ namespace Block1Uebung4.Models {
 
         public bool IstAnwesend {
             get {
-                return _istAnwesend;
+                return istAnwesend;
             }
             set {
-                _istAnwesend = value;
+                istAnwesend = value;
                 RaisePropertyChanged();
             }
         }
