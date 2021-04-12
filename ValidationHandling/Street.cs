@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ValidationHandling
 {
@@ -22,12 +17,13 @@ namespace ValidationHandling
 
         public override string Name
         {
+            // Getter und Setter werden hier mit den Properties der Basisklasse initialisiert.
             get => base.Name;
             set
             {
                 if (!string.Equals(base.Name, value))
                 {
-                    base.Name = value;
+                    base.Name = value; // nach Änderung des Wertes des Textfeldes wird dieser Setter als erstes angesteuert
                     RaisePropertyChanged();
                 }
             }

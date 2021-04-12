@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ValidationHandling
 {
@@ -69,7 +67,7 @@ namespace ValidationHandling
                 {
                     city = value;
                     RaisePropertyChanged();
-                    Validate();
+                    Validate(); // wird explizit aufgerufen
                 }
             }
         }
@@ -90,14 +88,14 @@ namespace ValidationHandling
             }
         }
 
-        public bool HasErrors => errors.Any();
+        public bool HasErrors => errors.Any(); // Eigenschaft von INotifyDataErrorInfo; Ruft einen Wert ab der angibt, ob die Entität über Validierungsfehler verfügt.
 
-        public IEnumerable GetErrors(string propertyName)
+        public IEnumerable GetErrors(string propertyName) // Methode von INotifyDataErrorInfo: Ruft die Validerungsfehler für eine angegebene Eigenschaft oder für die ganze Entität ab.
         {
             return errors.Where(t => t.propertyName.Equals(propertyName)).Select(t => t.error).ToList();
         }
 
-        private void Validate()
+        private void Validate() // selbst geschriebene Methode
         {
             errors.Clear();
 

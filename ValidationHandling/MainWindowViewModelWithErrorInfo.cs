@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ValidationHandling
 {
@@ -26,7 +22,7 @@ namespace ValidationHandling
 
         public string FirstName
         {
-            get => firstname;
+            get => firstname; // IDataErrorInfo setzt nach der Ausführung des Setters und vor der Ausführung des Getters ein. Der Wert von "firstname" wird dabei validiert.
             set
             {
                 if (!string.Equals(firstname, value))
@@ -43,7 +39,7 @@ namespace ValidationHandling
         {
             get => lastname;
             set
-            {
+         {
                 if (!string.Equals(lastname, value))
                 {
                     lastname = value;
@@ -68,11 +64,20 @@ namespace ValidationHandling
             }
         }
 
+        
         private Street street;
 
         public Street Street
         {
             get => street ??= new StreetWithNotification();
+            /* entspricht:
+              get {
+                    return street = street ?? new StreetWithNotification();
+                  }
+            // ?? ist der "NULL-Zusammenfügungsoperator"
+            // ??= ist der "NULL-Sammelzuweisungsoperator"
+            // gibt den linken Operanden zurück, wenn dieser nicht null ist, ansonsten den rechten Operanden
+            */
             set
             {
                 if (street != value)
@@ -83,9 +88,19 @@ namespace ValidationHandling
             }
         }
 
-        public string Error => string.Empty;
+        // Syntax: Expression Bodied Member (since C#6.0):
+        public string Error => string.Empty; // Error: Eigenschaft von IDataErrorInfo; ruft eine Fehlermeldung ab, die den Fehler in diesem Objekt angibt
 
-        public string this[string columnName]
+        // ist the same as
+
+        /*public string Error {
+            get { return string.Empty; }
+        }*/
+
+
+        // Item[String]: Eigenschaft von IDataErrorInfo; Ruft die Fehlermeldung für die Eigenschaft mit dem angegebenen Namen ab.
+        public string this[string columnName] // ruft die Fehlermeldung für die Eigenschaft ab, die an die Textbox gebunden ist, z.B. "LastName" in <Textbox Text={Binding LastName ...} ... />
+            // die Ermittlung der columnName mit "this" ist möglich, weil diese Klasse von IDataErrorInfo abstammt
         {
             get
             {

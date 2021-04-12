@@ -10,7 +10,7 @@
         <local: />
     </Window.DataContext>-->
     <Window.Resources>
-        <Style x:Key="txtErrorStyle" TargetType="TextBox">
+        <Style x:Key="txtErrorStyle" TargetType="TextBox"><!-- Hier wird der Style des Errors definiert und mit dem x:Key wiederverwendet. -->
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
                     <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
@@ -29,7 +29,13 @@
                 <RowDefinition Height="120" />
             </Grid.RowDefinitions>
 
-            <!-- Gültigkeit über ValidationRule -->
+            <!-- Gültigkeit über ValidationRule -> ShouldNotBeEmptyValidationRule.cs -->
+            <!-- Hier wird die Klasse ValidationRule verwendet. Das Binding erfolgt über das Attribut "ValidationRules".
+            Man ruft damit eine Klasse auf, die der Klasse "ValidationRule" entstammt. Der Validator der Klasse "ValidationRule" 
+            wird überschrieben und definiert dann eine benutzerdefinierte Regel. 
+            Gibt der Validator einen Error zurück, wird die StaticResource "txtErrorStyle" aktiv (so wie in allen Beispielen).
+            Die Validierung findet statt bevor der sich in der Textbox befindende Wert an die Property "FirstName" übergeben wird. Ist das Feld
+            leer, wird der Wert gar nicht an die Property übergeben. -->
             <StackPanel Grid.Row="0">
                 <StackPanel.DataContext>
                     <local:MainWindowViewModelWithErrorInfo />
@@ -37,7 +43,7 @@
                 <Label Margin="10" Content="1. Die Überprüfung erfolgt über eine ValidationRule" FontWeight="Bold"/>
                 <TextBox Height="26" Margin="10,10,10,0" Style="{StaticResource txtErrorStyle}">
                     <TextBox.Text>
-                        <Binding Path="FirstName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="FirstName" UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
                                 <local:ShouldNotBeEmptyValidationRule />
                             </Binding.ValidationRules>
@@ -48,17 +54,26 @@
             <!-- Problematisch hier ist, dass die Gültigkeit der Daten und deren Überprüfung in der UI definiert werden und damit von den eigentlichen Daten getrennt sind -->
 
             <!-- Gültigkeit über IDataErrorInfo -->
+            <!-- Das Interface IDataErrorInfo wurde hier direkt im ViewModel eingebunden. Damit es verwendet wird ruft man im Text-Binding "ValidatesOnDataErrors=True" auf. Damit
+            wird direkt der PropertyName des Textfelds (LastName) an die Eigenschaft "Item[String]" übergeben. "Item" ist dabei KlassenNameDerDasInterfaceEinbindet.this und der String ist
+            der Name der Property. Der Name der Property wird verwendet um den Inhalt dieser Property zu ermitteln und herauszufinden, ob der Wert gültig ist.
+            Die Validierung findet statt, nachdem der Wert über den Property-Setter gesetzt wurde und bevor der Wert über den Property-Getter an die Gui übermittelt wird. Der
+            Setter wird auch dann durchlaufen, wenn das Textfeld leer ist, also der Fehler vorliegt. -->
             <StackPanel Grid.Row="1">
                 <StackPanel.DataContext>
                     <local:MainWindowViewModelWithErrorInfo />
                 </StackPanel.DataContext>
                 <Label Margin="10" Content="2. Die Überprüfung erfolgt über IDataErrorInfo (LastName)" FontWeight="Bold"/>
-                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Name="txtValidationByInterface"
+                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding LastName, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}" Name="txtValidationByInterface"
                          Style="{StaticResource txtErrorStyle}"/>
                 <Button Width="30" Height="26" HorizontalAlignment="Left" Margin="10,10,0,0" Content="Info" Click="Button_Click" />
             </StackPanel>
 
             <!-- Gültigkeit über DataErrorValidationRule -->
+            <!-- "Stellt eine Regel für die Überprüfung von Fehlern da, die von der IDataErrorInfo-Implementierung des Quellobjekts ausgelöst wurde." 
+            Diese von C# bereitgestellte Subklasse von ValidationRule checkt eine Property, die sich in einer Klasse befindet, die das Interface IDataErrorInfo implementiert.
+            Der Ablauf des Debuggens ist genauso wie in dem Beispiel "Gültigkeit über IDataErrorInfo" und findet ebenfalls Anwendung, wenn der Value sich im Getter befindet, aber
+            bevor das return aus dem Getter ausgeführt wird. -->
             <StackPanel Grid.Row="2">
                 <StackPanel.DataContext>
                     <local:MainWindowViewModelWithErrorInfo />
@@ -66,9 +81,9 @@
                 <Label Margin="10" Content="3. Die Überprüfung erfolgt über die spezialisierte ValidationRule: DataErrorValidationRule (City)" FontWeight="Bold"/>
                 <TextBox Height="26" Margin="10,0,10,0" Style="{StaticResource txtErrorStyle}">
                     <TextBox.Text>
-                        <Binding Path="City" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="City" UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
-                                <DataErrorValidationRule />
+                                <DataErrorValidationRule /> <!-- ist ein Subklasse von ValidationRule, wird hier anscheinend direkt verwendet ohne Klasse, die diese Rule einbindet?? -->
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -76,21 +91,24 @@
             </StackPanel>
 
             <!-- Gültigkeit in einem untergeordneten Objekt -->
+            <!-- Eine Property der Oberklasse Street wird aufgerufen. Die Validation findet aber in der Subklasse StreetWithNotification statt. 
+            Ansonsten Ablauf ähnlich wie in "Gültigkeit über IDataErrorInfo" und "Gültigkeit über DataErrorValidationRule". -->
             <StackPanel Grid.Row="3">
                 <StackPanel.DataContext>
                     <local:MainWindowViewModelWithErrorInfo />
                 </StackPanel.DataContext>
                 <Label Margin="10" Content="4. Die Überprüfung erfolgt über IDataErrorInfo (Street.Name)" FontWeight="Bold"/>
-                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding Street.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" Style="{StaticResource txtErrorStyle}"/>
+                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding Street.Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}" Style="{StaticResource txtErrorStyle}"/>
             </StackPanel>
 
             <!-- Gültigkeit über ein INotifyDataErrorInfo -->
+            <!-- Der Validator wird direkt in der Property aufgerufen. -->
             <StackPanel Grid.Row="4">
                 <StackPanel.DataContext>
                     <local:MainWindowViewModelWithErrorNotification />
                 </StackPanel.DataContext>
                 <Label Margin="10" Content="5. Die Überprüfung erfolgt über INotifyDataErrorInfo (LastName)" FontWeight="Bold"/>
-                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged,  Mode=TwoWay}" Style="{StaticResource txtErrorStyle}"/>
+                <TextBox Height="26" Margin="10,10,10,0" Text="{Binding LastName, UpdateSourceTrigger=LostFocus,  Mode=TwoWay}" Style="{StaticResource txtErrorStyle}"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>
