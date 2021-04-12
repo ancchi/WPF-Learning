@@ -1,0 +1,11 @@
+Folgende Aufgabe sind immer im MVVM Zusammenhang zu sehen.
+
+-> Hinzufügen und Entfernen von Einträgen in einer ComboBox
+-> Auswählen eines speziellen Elementes in einer Combobox
+
+-> Zuordnen von Text in einer Textbox
+-> Sofortiges Reagieren von Änderungen des Textes in einer Textbox
+
+-> Verwenden von Label und dynamische Zuordnung des Inhaltes in Abhängigkeit von Eigenschaften eines ViewModels/Models
+
+-> Ändern von Eigenschaften eines in einer Liste ausgewählten Eintrages mit unmittelbarer Reaktion
