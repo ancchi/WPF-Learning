@@ -3,15 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Converters="clr-namespace:Block1Uebung3.Converters"
+             xmlns:Converter="clr-namespace:Block1Uebung3.Converters"
              xmlns:vml="clr-namespace:Block1Uebung3.VML"
              vml:ViewModelLocator.AutoHookedUpViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="450">
 
     <UserControl.Resources>
-        
-        <Converters:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+        <Converter:BooleanToColorIValueConverter x:Key="BooleanToColorIValueConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -36,7 +35,7 @@
             <!-- TODO leere Zeile muss weg! -->
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 20 0 0">
                 <TextBox Text="{Binding Path=Student.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                         Foreground="{Binding Student.IstAnwesend, Converter={StaticResource BooleanToColorConverter}}" 
+                         Foreground="{Binding Student.IstAnwesend, Converter={StaticResource BooleanToColorIValueConverter}}" 
                          FontWeight="Bold" FontSize="20"
                          BorderThickness="0" Width="200" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
             </StackPanel>
