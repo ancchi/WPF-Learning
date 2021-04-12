@@ -115,6 +115,18 @@ namespace Block1Uebung1.ViewModels {
             }
         }
 
+        private string _enteredFlower2;
+        public string EnteredFlower2 {
+            get => _enteredFlower2;
+            set {
+                if (!value.Equals(_enteredFlower2)) {
+                    _enteredFlower2 = value;
+                    flowers.Add(new Flower { NameOfFlower = _enteredFlower2});
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         // Liste nach Anfangsbuchstaben filtern
 
         private string[] _myAlphabet = {"Alle", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
