@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Block2Aufgaben2Bis4OhnePrism", "Block2Aufgaben2Bis4OhnePrism.csproj", "{615A9C86-107D-4ADA-A64A-0D2E4EBAACC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{615A9C86-107D-4ADA-A64A-0D2E4EBAACC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{615A9C86-107D-4ADA-A64A-0D2E4EBAACC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{615A9C86-107D-4ADA-A64A-0D2E4EBAACC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{615A9C86-107D-4ADA-A64A-0D2E4EBAACC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB49237C-0E18-49DE-8499-1BBEBB0D72A8}
+	EndGlobalSection
+EndGlobal
