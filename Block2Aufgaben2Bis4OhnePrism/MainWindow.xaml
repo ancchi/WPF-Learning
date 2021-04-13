@@ -26,23 +26,21 @@
         </Grid.DataContext>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="257" />
-            <ColumnDefinition Width="193" />
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Margin="20">
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="20,20,20,20">
             <TextBox Text="{Binding NewStudentInputString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource txtErrorStyle}" 
                           Height="30" Margin="0 20 0 10"/>
-            <StackPanel Orientation="Horizontal">
-                    <Button Content="Hinzufügen" Command="{Binding AddStudentToList}"
-                            Width="80" HorizontalAlignment="Left" Margin="10"/>
-                    <Button Content="Ändern" Width="80" HorizontalAlignment="Left" Margin="10"/>
-                </StackPanel>
-            </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20">
+            <Button Content="Hinzufügen" Command="{Binding AddStudentToList}"
+                            Width="80" HorizontalAlignment="Right" Margin="10"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="20,40,20,20">
             <ScrollViewer>
-                <ListBox ItemsSource="{Binding StudentList}" MaxHeight="250" >
+                <ListBox ItemsSource="{Binding StudentList}" MaxHeight="100" SelectedItem="{Binding SelectedStudent}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="Student">
                             <StackPanel Orientation="Horizontal">
@@ -55,6 +53,14 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="20,20,20,20">
+            <Label Content="Vorname" Target="{Binding ElementName=vorname}" />
+            <TextBox x:Name="vorname" Text="{Binding Path=SelectedStudent.PreName, UpdateSourceTrigger=PropertyChanged}" Width="120" HorizontalAlignment="Left" />
+            <Label Content="Nachname:" Target="{Binding ElementName=nachname}" />
+            <TextBox x:Name="nachname" Text="{Binding Path=SelectedStudent.LastName, UpdateSourceTrigger=PropertyChanged}"  Width="120" HorizontalAlignment="Left" />
+            <Label Content="Anwesend:" Target="{Binding ElementName=anwesend}" />
+            <TextBox x:Name="anwesend" Text="{Binding Path=SelectedStudent.IstAnwesend, UpdateSourceTrigger=PropertyChanged}"  Width="120" HorizontalAlignment="Left" />
         </StackPanel>
     </Grid>
 </Window>

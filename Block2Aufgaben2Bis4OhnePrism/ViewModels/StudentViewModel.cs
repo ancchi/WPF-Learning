@@ -56,7 +56,15 @@ namespace Block2Aufgaben2Bis4OhnePrism.ViewModels {
             }
         }
 
+        private Student selectedStudent;
 
+        public Student SelectedStudent {
+            get => selectedStudent;
+            set {
+                selectedStudent = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged([CallerMemberName] string propertyName = null) {
@@ -81,9 +89,9 @@ namespace Block2Aufgaben2Bis4OhnePrism.ViewModels {
 
         public string Error => string.Empty;
 
-        public string this[string columnName] {
+        public string this[string columnName] { // TODO diese Property wird aus irgendeinem Grund nicht aufgerufen!
             get {
-                if (columnName.Equals(nameof(NewStudentInputString))) && NewStudent == null) {
+                if (columnName.Equals(nameof(NewStudentInputString)) && NewStudent == null) {
                     return "Das Format für einen neuen Eintrag ist 'Nachname, Vorname, Anwesend/Nicht anwesend'";
                 }
                 return string.Empty;
@@ -92,7 +100,7 @@ namespace Block2Aufgaben2Bis4OhnePrism.ViewModels {
 
         private void GenerateInitialStudentList() {
             studentList.Add(new Student { PreName = "Anika", LastName = "Langer", IstAnwesend = true});
-            studentList.Add(new Student { PreName = "Fritz", LastName = "Bode", IstAnwesend = true});
+            studentList.Add(new Student { PreName = "Fritz", LastName = "Bode", IstAnwesend = false});
             studentList.Add(new Student { PreName = "Isabella Lisa", LastName = "Parker", IstAnwesend = true});
 
             StudentList = studentList;
