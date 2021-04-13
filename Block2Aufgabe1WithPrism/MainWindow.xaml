@@ -1,0 +1,40 @@
+﻿<Window x:Class="Block2WithPrism.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Block2WithPrism"
+        xmlns:viewmodels="clr-namespace:Block2WithPrism.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="300" Background="Beige">
+
+    <Window.Resources>
+        <Style x:Key="comboboxErrorStyle" TargetType="ComboBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Background" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- -> Hinzufügen und Entfernen von Einträgen in einer ComboBox
+             -> Auswählen eines speziellen Elementes in einer Combobox -->
+        <StackPanel Grid.Row="0" Margin="20" HorizontalAlignment="Center">
+            <StackPanel.DataContext>
+                <viewmodels:PlaygroundViewModel/>
+            </StackPanel.DataContext>
+            <ComboBox ItemsSource="{Binding ComboBoxListe}" IsEditable="True" SelectedItem="{Binding SelectedComboboxItem}"
+                      Text="{Binding NewComboboxItem, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" 
+                      Style="{StaticResource comboboxErrorStyle}" Width="150" />
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Button Content="Hinzufügen" Command="{Binding AddItemToComboBoxCommand}" HorizontalAlignment="Left" Width="70" Margin="0 0 5 0"/>
+                <Button Content="Entfernen" Command="{Binding DeleteSelectedItemCommand}" Width="70" Margin="5 0 0 0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
