@@ -12,9 +12,9 @@
     <Window.Resources>
         <Style x:Key="txtErrorStyle" TargetType="TextBox">
             <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="true">
+                <Trigger Property="Validation.HasError" Value="True">
                     <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                    <Setter Property="Background" Value="DarkRed" />
+                    <Setter Property="Foreground" Value="DarkRed" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -35,8 +35,8 @@
         <StackPanel Grid.Column="0" Grid.Row="0" Margin="20,20,20,20">
             <TextBlock Text="Format für die Eingabe der Daten:" Margin="0 20 0 0" />
             <TextBlock Text="Nachname, Vorname, Anwesend (ja/nein)"></TextBlock>
-            <TextBox Text="{Binding NewStudentInputString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource txtErrorStyle}" 
-                          Name="MeineTextBox" Height="30" />
+            <TextBox Text="{Binding NewStudentInputString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" 
+                     Style="{StaticResource txtErrorStyle}" Name="MeineTextBox" Height="30" />
             <Button Content="Hinzufügen" Command="{Binding AddStudentToList}"
                             Width="80" HorizontalAlignment="Right" Margin="10"/>
         </StackPanel>

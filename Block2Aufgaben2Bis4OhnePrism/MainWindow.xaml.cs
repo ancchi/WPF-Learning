@@ -20,7 +20,6 @@ namespace Block2Aufgaben2Bis4OhnePrism {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            MeineTextBox.Text = "Nachname, Vorname, ja/nein"; // das wird normalerweise nicht so verwendet!
         }
 
     }

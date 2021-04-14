@@ -16,10 +16,21 @@ namespace Block2Aufgaben2Bis4OhnePrism.ViewModels {
 
         public void AddStudent() {
             studentList.Add(NewStudent);
+            NewStudentInputString = string.Empty;
         }
 
+        bool isStudentInList = false;
         public bool CanAddStudent() {
-            return (NewStudent != null);
+            isStudentInList = false;
+            if (NewStudent != null) {
+                foreach (Student student in StudentList) {
+                    if (NewStudent.PreName.Equals(student.PreName) && NewStudent.LastName.Equals(student.LastName)) {
+                        isStudentInList = true;
+                        break;
+                    }
+                }
+            }
+            return (NewStudent != null && !isStudentInList);
         }
 
         public ObservableCollection<Student> studentList = new(); // vereinfacht für new ObservableCollection<Student>()
@@ -28,11 +39,11 @@ namespace Block2Aufgaben2Bis4OhnePrism.ViewModels {
             set;
         }
 
-        private Student newStudent;
+        private Student newStudent = new Student();
         public Student NewStudent {
             get => newStudent;
             set {
-                if (!newStudent.Equals(value)) {
+                if (!(newStudent.PreName.Equals(value.PreName) && newStudent.LastName.Equals(value.LastName))) {
                     newStudent = value;
                     RaisePropertyChanged();
                     AddStudentToList.RaiseCanExecuteChanged();
@@ -83,6 +94,11 @@ namespace Block2Aufgaben2Bis4OhnePrism.ViewModels {
 
                 if (typeConverter.CanConvertFrom(typeof(string))) {
                     newStudent = typeConverter.ConvertFrom(NewStudentInputString) as Student;
+
+                    if (newStudent != null) {
+                        NewStudent = newStudent;
+                    }
+                    
                 }
             }
         }
@@ -91,10 +107,16 @@ namespace Block2Aufgaben2Bis4OhnePrism.ViewModels {
 
         public string this[string columnName] { // TODO diese Property wird aus irgendeinem Grund nicht aufgerufen!
             get {
-                if (columnName.Equals(nameof(NewStudentInputString)) && NewStudent == null) {
-                    return "Das Format für einen neuen Eintrag ist 'Nachname, Vorname, Anwesend/Nicht anwesend'";
-                }
-                return string.Empty;
+                string message = string.Empty;
+
+                if (columnName.Equals(nameof(NewStudentInputString)) && !string.IsNullOrEmpty(NewStudentInputString)) { // keine Validierung, wenn Textbox leer
+                    if (isStudentInList) {
+                        message = "Dieser Student wurde bereits in die Liste aufgenommen.";
+                    } else if (NewStudent == null) {
+                        message = "Das Format für einen neuen Eintrag ist 'Nachname, Vorname, Anwesend/Nicht anwesend'";
+                    }
+                } 
+                return message;
             }
         }
 
