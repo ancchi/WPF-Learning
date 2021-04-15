@@ -1,0 +1,18 @@
+﻿<Window x:Class="MyDiagonalPanel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyDiagonalPanel.Panels"
+        mc:Ignorable="d"
+        Title="DiagonalPanel" SizeToContent="WidthAndHeight">
+
+    <local:MyDiagonalPanel>
+        <Button Background="Yellow" BorderBrush="LightGray" BorderThickness="1 3 3 1" Margin="5" Padding="5">Button 1</Button>
+        <TextBox Background="#6199FF" BorderBrush="LightGray" BorderThickness="1 3 3 1" Margin="5" Padding="5">Layout bei der WPF</TextBox>
+        <Button Background="Orange" Width="80" BorderBrush="LightGray" BorderThickness="1 3 3 1" Margin="5" Padding="5">Button 2</Button>
+        <Button Background="Red" BorderBrush="LightGray" BorderThickness="1 3 3 1" Margin="5" Padding="5">Button 3</Button>
+        <Button Background="BlueViolet" Height="40" BorderBrush="LightGray" BorderThickness="1 3 3 1" Margin="5" Padding="5">Button 4</Button>
+        <Button Background="Lime" BorderBrush="LightGray" BorderThickness="1 3 3 1" Margin="5" Padding="5">Button 5</Button>
+    </local:MyDiagonalPanel>
+</Window>
