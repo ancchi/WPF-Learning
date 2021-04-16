@@ -1,10 +1,10 @@
 Folgende Aufgabe sind immer im MVVM Zusammenhang zu sehen (das spielt bei Styles aber weniger eine Rolle).
 
 -> Ändere das Erscheinungsbild eines Steuerelementes (z.B. Hintergrund, Rahmen)
--> Ändere das Erscheinungsbild aller Steuerelemente eines Typs
--> Erstelle unterschiedliche Styles für einen Typ und ordne zwei Steuerelemente die unterschiedlichen Styles zu.
+-> Ändere das Erscheinungsbild aller Steuerelemente eines Typs S.579
+-> Erstelle unterschiedliche Styles für einen Typ und ordne zwei Steuerelemente die unterschiedlichen Styles zu. S.578
 
--> Verwende ein Image Control, dessen Image als Ressource aus dem Projekt geladen wird
+-> Verwende ein Image Control, dessen Image als Ressource aus dem Projekt geladen wird S.290
 
 -> Ändere das Erscheinungsbild eines Eintrages in einer ListBox (Stichwort DataTemplates)
 
