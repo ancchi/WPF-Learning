@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyLayoutPlayground"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="500">
+        Title="MainWindow" Height="510" Width="520">
     <Grid>
         <TabControl Width="500" Height="500" UseLayoutRounding="True">
             <!-- Canvas -->
@@ -123,15 +123,131 @@
                     </StackPanel>
                 </DockPanel>
             </TabItem>
+            <!-- Styles von Elementen -->
             <TabItem Header="Styles von Elementen">
                 <!-- Innerhalb eines StackPanels können mehrere GroupBoxen sein, sonst nicht. -->
+
                 <StackPanel>
-                    <GroupBox Header="Mehrere Elemente, ein Style">
-
-
+                    <StackPanel.Resources>
+                        <!-- Ein Style für einen Element-Typ -->
+                        <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="Beige" />
+                            <Setter Property="Foreground" Value="#230444" />
+                            <Setter Property="Width" Value="120" />
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="FontWeight" Value="Heavy" />
+                            <Setter Property="Margin" Value="0, 10, 0, 10" />
+                        </Style>
+                        <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}">
+                            <Setter Property="Background" Value="#230444" />
+                            <Setter Property="Width" Value="150" />
+                            <Setter Property="Margin" Value="5" />
+                            <Setter Property="Padding" Value="5" />
+                            <Setter Property="Foreground" Value="AliceBlue" />
+                            <Setter Property="FontFamily" Value="Vivaldi" />
+                            <Setter Property="FontSize" Value="20" />
+                        </Style>
+                        <!-- Ein Style pro Element vom selben Typ -->
+                        <Style x:Key="btnStyle1" TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="Black" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontWeight" Value="DemiBold" />
+                            <Setter Property="BorderBrush" Value="BlueViolet" />
+                            <Setter Property="BorderThickness" Value="0 3 0 3" />
+                            <Setter Property="Margin" Value="0 5 0 5" />
+                            <Setter Property="Width" Value="150" />
+                        </Style>
+                        <Style x:Key="btnStyle2" TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="CornflowerBlue" />
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="FontWeight" Value="Light" />
+                            <Setter Property="BorderBrush" Value="#000022" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Margin" Value="0 10 0 10" />
+                            <Setter Property="Cursor" Value="Help" />
+                        </Style>
+                        <Style x:Key="txtStyle1" TargetType="{x:Type TextBlock}">
+                            <Setter Property="Background" Value="Black" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontWeight" Value="DemiBold" />
+                            <Setter Property="Margin" Value="0 10 0 10" />
+                            <Setter Property="Width" Value="150" />
+                        </Style>
+                        <Style x:Key="txtStyle2" TargetType="{x:Type TextBlock}">
+                            <Setter Property="Background" Value="CornflowerBlue" />
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="FontWeight" Value="Light" />
+                            <Setter Property="Margin" Value="0 10 0 10" />
+                            <Setter Property="Cursor" Value="Help" />
+                            <Setter Property="Margin" Value="50 0 50 0" />
+                        </Style>
+                        <!-- Ein Style für mehrere Elementtypen -->
+                        <Style x:Key="commonStyle" TargetType="{x:Type Control}">
+                            <Style.Setters>
+                                <Setter Property="Background" Value="SandyBrown" />
+                                <Setter Property="Margin" Value="15 5 15 5" />
+                                <Setter Property="Width" Value="170" />
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                                <Setter Property="Padding" Value="3" />
+                                <Setter Property="BorderBrush" Value="Bisque" />
+                                <Setter Property="BorderThickness" Value="5" />
+                            </Style.Setters>
+                        </Style>
+                    </StackPanel.Resources>
+                    <GroupBox Header="Mehrere Elemente vom selben Typ, ein Style" Background="SkyBlue" FontWeight="Bold">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <Button Content="Button 1" />
+                                <Button Content="Button 2" />
+                                <Button Content="Button 2" />
+                            </StackPanel>
+                            <StackPanel  Grid.Column="1">
+                                <TextBlock Text="Mein erster Text" FontFamily="Bradley Hand ITC" /> <!-- Property überschrieben -->
+                                <TextBlock Text="Mein zweiter Text" />
+                                <TextBlock Text="Mein dritter Text" />
+                            </StackPanel>
+                        </Grid>
                     </GroupBox>
-                    <GroupBox Header="Mehrere Styles, verschiedene Elemente">
-
+                    <GroupBox Header="Mehrere Styles, mehrere Elemente vom selben Typ" FontWeight="Bold">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250" />
+                                <ColumnDefinition Width="250" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <Button Content="Button 1" Style="{StaticResource btnStyle1}"/>
+                                <Button Content="Button 2" Style="{StaticResource btnStyle2}"/>
+                                <Button Content="Button 2" />
+                            </StackPanel>
+                            <StackPanel  Grid.Column="1">
+                                <TextBlock Text="Mein erster Text" Style="{StaticResource txtStyle1}" />
+                                <TextBlock Text="Mein zweiter Text" Style="{StaticResource txtStyle2}"/>
+                                <TextBlock Text="Mein dritter Text" Style="{StaticResource txtStyle1}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Ein Style für verschiedene Typen" FontWeight="Bold">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250" />
+                                <ColumnDefinition Width="250" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <Button Content="Button 1" Style="{StaticResource commonStyle}"/>
+                                <Button Content="Button 2" Style="{StaticResource commonStyle}"/>
+                                <Button Content="Button 2" />
+                            </StackPanel>
+                            <StackPanel  Grid.Column="1">
+                                <TextBox Text="Meine erste TextBox" Style="{StaticResource commonStyle}" /> <!-- hat mit TextBlock nicht funktionert -->
+                                <TextBox Text="Meine zweite TextBox" Style="{StaticResource commonStyle}"/>
+                                <TextBox Text="Meine dritte TextBox" Style="{StaticResource commonStyle}"/>
+                            </StackPanel>
+                        </Grid>
                     </GroupBox>
                 </StackPanel>
             </TabItem>
