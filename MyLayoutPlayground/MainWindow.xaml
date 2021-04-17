@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyLayoutPlayground"
         mc:Ignorable="d"
-        Title="MainWindow" Height="510" Width="520">
+        Title="MainWindow" Height="540" Width="520">
     <Grid>
         <TabControl Width="500" Height="500" UseLayoutRounding="True">
             <!-- Canvas -->
@@ -70,10 +70,10 @@
                                     </TransformGroup>
                                 </Button.RenderTransform>
                             </Button>
-                            <TextBlock Text="Das ist ein TextBlock">
-                            </TextBlock>
-                            <TextBox Text="Das ist eine TextBox" />
-                            <Button Width="90" Height="50" Margin="30" ToolTip="Das ist ein Button mit einem Smiley drauf.">
+                            <TextBlock Text="Das ist ein TextBlock" Background="BlanchedAlmond" Padding="5"/>
+                            <TextBox Text="Das ist eine TextBox und da ist ganz viel Text drin." Background="BurlyWood" BorderBrush="Chocolate" BorderThickness="2" Width="150"
+                                     HorizontalScrollBarVisibility="Visible" Padding="10"/>
+                            <Button Width="90" Height="50" Margin="10" ToolTip="Das ist ein Button mit einem Smiley drauf.">
                                 <StackPanel Orientation="Horizontal">
                                     <Canvas Width="45" Height="45">
                                         <Ellipse Fill="Yellow" Width="45" Height="45" />
@@ -118,7 +118,30 @@
                                     <TextBox x:Name="vorname" MinWidth="80" Text="Oblique ist schräger als Italic." FontStyle="Oblique"/>
                                 </StackPanel>
                             </GroupBox>
-
+                            <GroupBox Header="WrapPanel" Margin="5, 0, 5, 0"  Padding="5 0 5 10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <WrapPanel Grid.Column="0 " Width="80" Background="Beige">
+                                        <Button Content="1" Width="20" Height="20" Background="Blue" />
+                                        <Button Content="2" Width="20" Height="20" Background="Red" />
+                                        <Button Content="3" Width="20" Height="20" Background="Green" />
+                                        <Button Content="4" Width="20" Height="20" Background="Yellow" />
+                                        <Button Content="5" Width="20" Height="20" Background="DeepPink" />
+                                        <Button Content="6" Width="20" Height="20" Background="Orange" />
+                                    </WrapPanel>
+                                    <WrapPanel Grid.Column="1" Orientation="Vertical" Height="80" Background="Beige">
+                                        <Button Content="1" Width="20" Height="20" Background="Blue" />
+                                        <Button Content="2" Width="20" Height="20" Background="Red" />
+                                        <Button Content="3" Width="20" Height="20" Background="Green" />
+                                        <Button Content="4" Width="20" Height="20" Background="Yellow" />
+                                        <Button Content="5" Width="20" Height="20" Background="DeepPink" />
+                                        <Button Content="6" Width="20" Height="20" Background="Orange" />
+                                    </WrapPanel>
+                                </Grid>
+                            </GroupBox>
                         </StackPanel>
                     </StackPanel>
                 </DockPanel>
@@ -126,7 +149,6 @@
             <!-- Styles von Elementen -->
             <TabItem Header="Styles von Elementen">
                 <!-- Innerhalb eines StackPanels können mehrere GroupBoxen sein, sonst nicht. -->
-
                 <StackPanel>
                     <StackPanel.Resources>
                         <!-- Ein Style für einen Element-Typ -->
@@ -207,7 +229,8 @@
                                 <Button Content="Button 2" />
                             </StackPanel>
                             <StackPanel  Grid.Column="1">
-                                <TextBlock Text="Mein erster Text" FontFamily="Bradley Hand ITC" /> <!-- Property überschrieben -->
+                                <TextBlock Text="Mein erster Text" FontFamily="Bradley Hand ITC" />
+                                <!-- Property überschrieben -->
                                 <TextBlock Text="Mein zweiter Text" />
                                 <TextBlock Text="Mein dritter Text" />
                             </StackPanel>
@@ -243,7 +266,8 @@
                                 <Button Content="Button 2" />
                             </StackPanel>
                             <StackPanel  Grid.Column="1">
-                                <TextBox Text="Meine erste TextBox" Style="{StaticResource commonStyle}" /> <!-- hat mit TextBlock nicht funktionert -->
+                                <TextBox Text="Meine erste TextBox" Style="{StaticResource commonStyle}" />
+                                <!-- hat mit TextBlock nicht funktionert -->
                                 <TextBox Text="Meine zweite TextBox" Style="{StaticResource commonStyle}"/>
                                 <TextBox Text="Meine dritte TextBox" Style="{StaticResource commonStyle}"/>
                             </StackPanel>
@@ -251,10 +275,83 @@
                     </GroupBox>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Images">
-
-            </TabItem>
+            <!-- Grid -->
             <TabItem Header="Grid">
+                <Grid ShowGridLines="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/> <!-- Pixel -->
+                        <RowDefinition Height="*"/> <!-- Star --> 
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0" Grid.Row="0">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Blue"></SolidColorBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Green"></SolidColorBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="3" Grid.Row="0">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="CornflowerBlue"></SolidColorBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="DarkViolet" Opacity="0.5"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="3" Grid.Row="1" Grid.RowSpan="2">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="#ff5500" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="0" Grid.Row="2">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Yellow" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="1" Grid.Row="2">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="LightGreen" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="2" Grid.Row="2">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Red" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="SandyBrown" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Grid.Column="3" Grid.Row="3">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="#230444" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <!-- GridSplitter -->
+                    <GridSplitter Grid.Column="1" Grid.Row="2" Background="Black" Width="5" HorizontalAlignment="Center" ShowsPreview="True"/>
+                    <GridSplitter Grid.Column="1" Grid.Row="2" Background="#333333" Width="5" HorizontalAlignment="Left" />
+                    <GridSplitter Grid.Column="1" Grid.Row="1" Background="#555555" Width="5" HorizontalAlignment="Stretch" />
+                    <GridSplitter Grid.Column="1" Grid.Row="3" Background="#888888" Width="5" ResizeBehavior="CurrentAndNext" />
+                    
+                    <GridSplitter Grid.Column="1" Grid.Row="1" Background="DarkRed" Width="5" ResizeDirection="Rows" />
+                    <GridSplitter Grid.Column="1" Grid.Row="2" Background="IndianRed" Width="100" Height="5" VerticalAlignment="Top" ResizeDirection="Rows" ResizeBehavior="CurrentAndNext"/>
+                    <GridSplitter Grid.Column="3" Grid.Row="0" Background="Red" Width="100" Height="5" VerticalAlignment="Bottom" ResizeDirection="Rows" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Images">
 
             </TabItem>
             <TabItem Header="InkCanvas">
