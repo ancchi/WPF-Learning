@@ -404,7 +404,15 @@
                 </Grid>
             </TabItem>
             <TabItem Header="InkCanvas">
-                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <InkCanvas EditingMode="Ink" />
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
