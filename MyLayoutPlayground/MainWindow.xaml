@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyLayoutPlayground"
+        xmlns:viewModels="clr-namespace:MyLayoutPlayground.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="520">
     <Grid>
@@ -352,7 +353,55 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Images">
-
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0" Margin="0 20 0 20">
+                        <Image Source="/images/Baer.jpg" Width="100" Height="98" Stretch="Fill" Margin="5" />
+                        <Image Source="/images/Hund.jpg" Width="100" Height="98" Stretch="Fill" Margin="5" />
+                        <Image Source="/images/Panda.jpg" Width="100" Height="98" Stretch="Fill" Margin="5" />
+                        <Image Source="/images/Schaf.jpg" Width="100" Height="98" Stretch="Fill" Margin="5" />
+                        <Image Source="/images/Ziege.jpg" Width="100" Height="98" Stretch="Fill" Margin="5" />
+                    </WrapPanel>
+                    <StackPanel Grid.Column="1" Margin="0 20 0 20">
+                        <StackPanel.DataContext>
+                            <viewModels:StudentViewModel />
+                        </StackPanel.DataContext>
+                        <StackPanel>
+                            <ScrollViewer>
+                                <ListBox Name="Studentenliste" ItemsSource="{Binding StudentList}" MaxHeight="300" BorderBrush="Black" Background="Black" 
+                                         Foreground="Beige" FontWeight="DemiBold">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="Student">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="{Binding ImgPath}" Width="50" Height="50" Stretch="Fill" Margin="5" />
+                                                <TextBlock x:Name="preName" Text="{Binding Path=PreName, Mode=OneWay}" Margin="20 5 3 5" VerticalAlignment="Center"/>
+                                                <TextBlock x:Name="lastName" Text="{Binding Path=LastName, Mode=OneWay}" Margin="0 5 3 5" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                            <!-- einzelne Elemente in einer Listbox ändern -->
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding PreName}" Value="Lissy">
+                                                    <Setter Property="TextBlock.Foreground" Value="Red" TargetName="preName" />
+                                                    <Setter Property="TextBlock.FontStyle" Value="Italic" TargetName="preName" />
+                                                    <Setter Property="TextBlock.Foreground" Value="Red" TargetName="lastName" />
+                                                    <Setter Property="TextBlock.FontStyle" Value="Italic" TargetName="lastName" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding PreName}" Value="Alex">
+                                                    <Setter Property="TextBlock.Foreground" Value="LightBlue" TargetName="preName" />
+                                                    <Setter Property="TextBlock.FontStyle" Value="Italic" TargetName="preName" />
+                                                    <Setter Property="TextBlock.Foreground" Value="LightBlue" TargetName="lastName" />
+                                                    <Setter Property="TextBlock.FontStyle" Value="Italic" TargetName="lastName" />
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
             </TabItem>
             <TabItem Header="InkCanvas">
                 
