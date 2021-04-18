@@ -6,7 +6,7 @@ Folgende Aufgabe sind immer im MVVM Zusammenhang zu sehen (das spielt bei Styles
 
 -> Verwende ein Image Control, dessen Image als Ressource aus dem Projekt geladen wird S.290
 
--> Ändere das Erscheinungsbild eines Eintrages in einer ListBox (Stichwort DataTemplates)
+-> Ändere das Erscheinungsbild eines Eintrages in einer ListBox (Stichwort DataTemplates) S.607
 
 -> Erstelle eine ListBox für Studenten, bei der jeder Eintrag über ein Bild verfügt
 
