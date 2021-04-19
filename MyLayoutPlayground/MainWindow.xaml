@@ -370,8 +370,8 @@
                             <viewModels:StudentViewModel />
                         </StackPanel.DataContext>
                         <StackPanel>
-                            <ScrollViewer>
-                                <ListBox Name="Studentenliste" ItemsSource="{Binding StudentList}" MaxHeight="300" BorderBrush="Black" Background="Black" 
+                            <ScrollViewer Margin="0 0 0 20">
+                                <ListBox Name="Studentenliste" ItemsSource="{Binding StudentList}" MaxHeight="200" BorderBrush="Black" Background="Black" 
                                          Foreground="Beige" FontWeight="DemiBold">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate DataType="Student">
@@ -388,11 +388,52 @@
                                                     <Setter Property="TextBlock.Foreground" Value="Red" TargetName="lastName" />
                                                     <Setter Property="TextBlock.FontStyle" Value="Italic" TargetName="lastName" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding PreName}" Value="Alex">
+                                                <DataTrigger Binding="{Binding PreName}" Value="John">
                                                     <Setter Property="TextBlock.Foreground" Value="LightBlue" TargetName="preName" />
                                                     <Setter Property="TextBlock.FontStyle" Value="Italic" TargetName="preName" />
                                                     <Setter Property="TextBlock.Foreground" Value="LightBlue" TargetName="lastName" />
                                                     <Setter Property="TextBlock.FontStyle" Value="Italic" TargetName="lastName" />
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                            <ScrollViewer> <!-- ScrollRichtung ist automatisch quer/horizontal -->
+                                <ListBox ItemsSource="{Binding StudentList}">
+                                    <!-- ItemsPanel vor ItemTemplate -->
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <!-- Die StackPanel sollen nebeneinander dargestellt werden -->
+                                            <VirtualizingStackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <!-- ItemTemplate (wie oben) -->
+                                    <ListBox.ItemTemplate>
+                                        <!-- DataTemplate (wie oben) -->
+                                        <DataTemplate DataType="Student">
+                                            <!-- StackPanel (wie oben), aber innerhalb einer Border (optional) -->
+                                            <Border x:Name="border" CornerRadius="5" Margin="2" BorderBrush="LightGray" BorderThickness="3" Background="DarkGray">
+                                            <!-- StackPanel innerhalb der Border -->
+                                                <StackPanel Margin="5">
+                                                    <TextBlock x:Name="prename" Text="{Binding PreName}" FontWeight="Bold" />
+                                                    <TextBlock x:Name="lastname" Text="{Binding LastName}" FontWeight="Bold" />
+                                                    <Image Source="{Binding ImgPath}" Height="50" Margin="0 5" />
+                                                </StackPanel>
+                                            </Border>
+                                            <!-- DataTemplate.Triggers (wie oben) -->
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding PreName}" Value="Mark">
+                                                    <!-- Für Border können Eigenschaften gesetzt werden -->
+                                                    <Setter Property="Border.Background" Value="Black" TargetName="border" />
+                                                    <Setter Property="TextBlock.Foreground" Value="White" TargetName="prename" />
+                                                    <Setter Property="TextBlock.Foreground" Value="White" TargetName="lastname" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding PreName}" Value="Clara">
+                                                    <!-- Für Border können Eigenschaften gesetzt werden -->
+                                                    <Setter Property="Border.Background" Value="Black" TargetName="border" />
+                                                    <Setter Property="TextBlock.Foreground" Value="White" TargetName="prename" />
+                                                    <Setter Property="TextBlock.Foreground" Value="White" TargetName="lastname" />
                                                 </DataTrigger>
                                             </DataTemplate.Triggers>
                                         </DataTemplate>

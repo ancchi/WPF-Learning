@@ -44,7 +44,7 @@ namespace MyLayoutPlayground.ViewModels {
         public void generateStudentList() {
             studentList.Add(new Student { PreName = "Lissy", LastName = "Baumann", ImgPath = path + "Baer.jpg" });
             studentList.Add(new Student { PreName = "Mark", LastName = "Ficus", ImgPath = path + "Hund.jpg" });
-            studentList.Add(new Student { PreName = "Alex", LastName = "Sander", ImgPath = path + "Panda.jpg" });
+            studentList.Add(new Student { PreName = "John", LastName = "Sander", ImgPath = path + "Panda.jpg" });
             studentList.Add(new Student { PreName = "Clara", LastName = "See", ImgPath = path + "Schaf.jpg" });
             studentList.Add(new Student { PreName = "Sibirius", LastName = "Waystine", ImgPath = path + "Ziege.jpg" });
 
